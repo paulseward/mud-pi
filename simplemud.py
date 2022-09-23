@@ -110,22 +110,26 @@ while True:
         # their name and move them to the starting room.
         if players[id]["name"] is None:
 
-            players[id]["name"] = command
-            players[id]["room"] = "Tavern"
+            if command == '':
+                # send the new player a prompt for their name
+                mud.send_message(id, "What is your name?")
+            else:
+                players[id]["name"] = command
+                players[id]["room"] = "Tavern"
 
-            # go through all the players in the game
-            for pid, pl in players.items():
-                # send each player a message to tell them about the new player
-                mud.send_message(pid, "{} entered the game".format(
-                                                        players[id]["name"]))
+                # go through all the players in the game
+                for pid, pl in players.items():
+                    # send each player a message to tell them about the new player
+                    mud.send_message(pid, "{} entered the game".format(
+                                                            players[id]["name"]))
 
-            # send the new player a welcome message
-            mud.send_message(id, "Welcome to the game, {}. ".format(
-                                                           players[id]["name"])
-                             + "Type 'help' for a list of commands. Have fun!")
+                # send the new player a welcome message
+                mud.send_message(id, "Welcome to the game, {}. ".format(
+                                                               players[id]["name"])
+                                 + "Type 'help' for a list of commands. Have fun!")
 
-            # send the new player the description of their current room
-            mud.send_message(id, rooms[players[id]["room"]]["description"])
+                # send the new player the description of their current room
+                mud.send_message(id, rooms[players[id]["room"]]["description"])
 
         # each of the possible commands is handled below. Try adding new
         # commands to the game!
