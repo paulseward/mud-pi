@@ -57,6 +57,12 @@ def add_new_player(id):
     # send the new player a prompt for their name
     mud.send_message(id, "What is your name?")
 
+def check_player_name(name):
+    for pid in players:
+        if players[pid]["name"] == command:
+            return 0 
+    return 1
+
 # main game loop. We loop forever (i.e. until the program is terminated)
 while True:
 
@@ -106,6 +112,8 @@ while True:
             if command == '':
                 # send the new player a prompt for their name
                 mud.send_message(id, "What is your name?")
+            elif not check_player_name(command):
+                mud.send_message(id, "That name is already taken, try another")
             else:
                 players[id]["name"] = command
                 players[id]["room"] = "Tavern"
